@@ -1,14 +1,9 @@
-/**
-* JetBrains Space Automation
-* This Kotlin-script file lets you automate build activities
-* For more info, see https://www.jetbrains.com/help/space/automation.html
-*/
-
-job("Clone") {
+job("CodeSpyGlass") {
     container("alpine/git") {
+        val githubLink: String = Params("githublink")
         shellScript {
             content = """
-                echo "Ready to go!"
+                echo "Cloning ${githubLink}"
             """
         }
     }
