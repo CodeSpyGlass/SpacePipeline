@@ -15,6 +15,7 @@ job("CodeSpyGlass") {
                 rm -rf $codeDirectory
                 git clone $githubUrlShellReference $codeDirectory
                 ls -al $codeDirectory
+                find $codeDirectory -name "src/main/java/*"
             """.trimIndent()
         }
     }
