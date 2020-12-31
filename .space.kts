@@ -6,5 +6,10 @@ job("CodeSpyGlass") {
                 echo "Cloning ${'$'}GITHUB_LINK"
             """
         }
+        shellScript {
+            content = """
+                git --version
+            """
+        }
     }
 }
