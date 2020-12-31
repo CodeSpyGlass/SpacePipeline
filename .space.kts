@@ -17,8 +17,5 @@ job("CodeSpyGlass") {
                 ls -al $codeDirectory
             """.trimIndent()
         }
-        kotlinScript { api ->
-            println("api.parameters are '${api.parameters}'")
-        }
     }
 }
