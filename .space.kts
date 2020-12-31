@@ -24,24 +24,38 @@ job("CodeSpyGlass") {
         }
 
         class CloneStage(
-            private val githubUrl: JobEnvironmentVariable
+            private val githubUrl: JobEnvironmentVariable,
+            private val codeDirectory: String
         ) : PipelineStage() {
             override fun run() {
                 shellScript {
                     content = """
                 echo "Cloning ${githubUrl.shellReference()}"
                 git --version
-                rm -rf code
-                git clone ${githubUrl.shellReference()} code
-                ls -al code
+                rm -rf $codeDirectory
+                git clone ${githubUrl.shellReference()} $codeDirectory
+                ls -al $codeDirectory
             """
+                }
+            }
+        }
+
+        class AnalysisStage(
+            private val codeDirectory: String
+        ) : PipelineStage() {
+            override fun run() {
+                shellScript {
+                    content = """
+                        echo "Analysing Java in the directory $codeDirectory"
+                    """
                 }
             }
         }
 
         val githubUrl = JobEnvironmentVariable("GITHUB_URL", "githuburl")
         listOf(
-            CloneStage(githubUrl)
+            CloneStage(githubUrl, "code"),
+            AnalysisStage("code")
         ).forEach(PipelineStage::run)
     }
 }
