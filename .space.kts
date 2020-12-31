@@ -1,5 +1,10 @@
 job("CodeSpyGlass") {
     container("openjdk:11") {
+        resources {
+            memory = 2048
+            cpu = 2048
+        }
+
         env["GITHUB_URL"] = Params("githuburl")
         val codeDirectory = "code"
         val githubUrlShellReference = "${'$'}GITHUB_URL"
@@ -13,8 +18,7 @@ job("CodeSpyGlass") {
             """.trimIndent()
         }
         kotlinScript { api ->
-            val githubUrl = api.parameters["githubUrl"]
-            println("githubUrl is: $githubUrl")
+            println("api.parameters are '${api.parameters}'")
         }
     }
 }
