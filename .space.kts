@@ -30,7 +30,7 @@ job("CodeSpyGlass") {
             override fun run() {
                 shellScript {
                     content = """
-                echo "Cloning ${githubUrl.shellReference()}"
+                echo "Cloning '${githubUrl.shellReference()}' into directory '$codeDirectory'"
                 git --version
                 rm -rf $codeDirectory
                 git clone ${githubUrl.shellReference()} $codeDirectory
@@ -46,7 +46,7 @@ job("CodeSpyGlass") {
             override fun run() {
                 shellScript {
                     content = """
-                        echo "Analysing Java in the directory $codeDirectory"
+                        echo "Analysing Java in the directory '$codeDirectory'"
                     """
                 }
             }
