@@ -22,6 +22,5 @@ job("CodeSpyGlass") {
 
         env["GITHUB_URL"] = Params("githuburl")
         cloneStage("${'$'}GITHUB_URL", "code")
-        analysisStage("code")
     }
 }
