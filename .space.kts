@@ -10,6 +10,10 @@ job("CodeSpyGlass") {
                 ls -al $codeDirectory
             """.trimIndent()
             }
+            kotlinScript { api ->
+                val githubUrl = api.parameters["githubUrl"]
+                println("githubUrl is: $githubUrl")
+            }
         }
 
         fun analysisStage(codeDirectory: String) {
