@@ -1,32 +1,20 @@
 job("CodeSpyGlass") {
     container("openjdk:11") {
-        fun cloneStage(githubUrlShellReference: String, codeDirectory: String) {
-            shellScript {
-                content = """
+        env["GITHUB_URL"] = Params("githuburl")
+        val codeDirectory = "code"
+        val githubUrlShellReference = "${'$'}GITHUB_URL"
+        shellScript {
+            content = """
                 echo "Cloning '$githubUrlShellReference' into directory '$codeDirectory'"
                 git --version
                 rm -rf $codeDirectory
                 git clone $githubUrlShellReference $codeDirectory
                 ls -al $codeDirectory
             """.trimIndent()
-            }
-            kotlinScript { api ->
-                val githubUrl = api.parameters["githubUrl"]
-                println("githubUrl is: $githubUrl")
-            }
         }
-
-        fun analysisStage(codeDirectory: String) {
-            shellScript {
-                content = """
-                        echo "Analysing Java in the directory '$codeDirectory'"
-                    """.trimIndent()
-            }
+        kotlinScript { api ->
+            val githubUrl = api.parameters["githubUrl"]
+            println("githubUrl is: $githubUrl")
         }
-
-        env["GITHUB_URL"] = Params("githuburl")
-        val codeDirectory = "code"
-        cloneStage("${'$'}GITHUB_URL", codeDirectory)
-        analysisStage(codeDirectory)
     }
 }
