@@ -1,5 +1,5 @@
 job("CodeSpyGlass") {
-    container("alpine/git") {
+    container("openjdk:11") {
         class JobEnvironmentVariable(
             private val environmentVariableReference: String,
             pipelineParameterName: String
@@ -35,7 +35,7 @@ job("CodeSpyGlass") {
                 rm -rf $codeDirectory
                 git clone ${githubUrl.shellReference()} $codeDirectory
                 ls -al $codeDirectory
-            """
+            """.trimIndent()
                 }
             }
         }
@@ -47,7 +47,7 @@ job("CodeSpyGlass") {
                 shellScript {
                     content = """
                         echo "Analysing Java in the directory '$codeDirectory'"
-                    """
+                    """.trimIndent()
                 }
             }
         }
