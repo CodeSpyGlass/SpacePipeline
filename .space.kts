@@ -12,15 +12,15 @@ class JobEnvironmentVariable(
 
 job("CodeSpyGlass") {
     container("alpine/git") {
-        val githubUrlEnvironmentVariableName = "GITHUB_URL"
-        env[githubUrlEnvironmentVariableName] = Params("githuburl")
-        val githubUrlEnvironmentVariableRef = "${'$'}GITHUB_URL"
+        val githubUrl = JobEnvironmentVariable(
+            env, Params("githuburl"), "GITHUB_URL"
+        )
         shellScript {
             content = """
-                echo "Cloning $githubUrlEnvironmentVariableRef"
+                echo "Cloning ${githubUrl.ref()}"
                 git --version
                 rm -rf code
-                git clone $githubUrlEnvironmentVariableRef code
+                git clone ${githubUrl.ref()} code
                 ls -al code
             """
         }
