@@ -17,10 +17,10 @@ job("CodeSpyGlass") {
                 rm -rf $codeDirectory
                 git clone $githubUrlShellReference $codeDirectory
                 ls -al $codeDirectory
-                find $codeDirectory/src/main -name "*.java" || \ 
+                ((find $codeDirectory/src/main -name "*.java" || \ 
                 find "$codeDirectory"/src -name "*.java" || \
-                echo "FAILED: Couldn't find source root within the '$codeDirectory' directory. Tried 'src/main', then 'src'." \
-                > $javaFilesFile
+                echo "FAILED: Couldn't find source root within the '$codeDirectory' directory. Tried 'src/main', then 'src'.") \
+                2>&1 | grep -v ": No such file or directory") > $javaFilesFile
                 cat $javaFilesFile
             """.trimIndent()
         }
